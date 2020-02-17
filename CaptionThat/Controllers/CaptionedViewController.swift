@@ -11,11 +11,14 @@ import UIKit
 class CaptionedViewController: UIViewController {
 
     @IBOutlet weak var userImageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+    
     
 
     /*

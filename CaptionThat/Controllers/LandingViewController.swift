@@ -59,7 +59,7 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
     /// Calls the `LandingToCaptionedSegue` with the Picture as an argument
     func initalizeCaptionView(with picture: Picture) {
         /// make sure identifier matches the value you set in  Main.Storyboard
-        self.performSegue(withIdentifier: "LandingToCaptionSegue", sender: nil)
+        self.performSegue(withIdentifier: "LandingToCaptionSegue", sender: picture)
     }
     /*
     // MARK: - Navigation
@@ -70,5 +70,12 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC = segue.destination as! CaptionedViewController
+        let pic = sender as! Picture
+        destVC.userImageView.image = pic.image
+    
+    }
 
 }
