@@ -12,10 +12,12 @@ class CaptionedViewController: UIViewController {
 
     @IBOutlet weak var userImageView: UIImageView!
     var newPic: Picture!
+    @IBOutlet weak var captionLabel: UILabel!
     
     override func loadView() {
         super.loadView()
         userImageView.image = newPic.image
+        captionLabel.text = "New Caption"
     }
     
     override func viewDidLoad() {
