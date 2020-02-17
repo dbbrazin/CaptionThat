@@ -73,9 +73,12 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC = segue.destination as! CaptionedViewController
-        let pic = sender as! Picture
-        destVC.userImageView.image = pic.image
-    
+        if let pic = sender as? Picture {
+            destVC.newPic = pic
+        } else {
+            print("error")
+        }
+        
     }
 
 }

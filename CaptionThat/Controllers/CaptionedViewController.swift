@@ -11,10 +11,16 @@ import UIKit
 class CaptionedViewController: UIViewController {
 
     @IBOutlet weak var userImageView: UIImageView!
+    var newPic: Picture!
+    
+    override func loadView() {
+        super.loadView()
+        userImageView.image = newPic.image
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
