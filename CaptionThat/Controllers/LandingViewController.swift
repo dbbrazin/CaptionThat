@@ -43,7 +43,7 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
             assertionFailure("Failed to retrieve image after image picker told us an image was picked")
             return
         }
-        // Create a Picture instance
+        // Create a Picture instance and pass it to new view
         initalizeCaptionView(with: Picture(image: image))
     }
     
@@ -56,9 +56,8 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
         showImagePicker()
     }
     
-    /// Calls the `LandingToCaptionedSegue` with the Picture as an argument
+
     func initalizeCaptionView(with picture: Picture) {
-        /// make sure identifier matches the value you set in  Main.Storyboard
         self.performSegue(withIdentifier: "LandingToCaptionSegue", sender: picture)
     }
     /*
@@ -70,13 +69,12 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Pass the selected object to the new view controller.
     }
     */
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destVC = segue.destination as! CaptionedViewController
         if let pic = sender as? Picture {
             destVC.newPic = pic
         } else {
-            print("error")
+            assertionFailure("No picture to pass to CaptionedViewController")
         }
         
     }

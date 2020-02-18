@@ -11,13 +11,20 @@ import UIKit
 class CaptionedViewController: UIViewController {
 
     @IBOutlet weak var userImageView: UIImageView!
-    var newPic: Picture!
     @IBOutlet weak var captionLabel: UILabel!
+    
+    var newPic: Picture!
+    var captions = [Caption(text: "I am serious. And don't call me Shirley"),
+                    Caption(text: "I'm about to do to you what Limp Bizkit\n did to music in the late '90s."),
+                    Caption(text: "I'm in a glass case of emotion!"),
+                    Caption(text: "I'll have what she's having."),
+                    Caption(text: "Nothing to see here, move along")]
+    
     
     override func loadView() {
         super.loadView()
         userImageView.image = newPic.image
-        captionLabel.text = "New Caption"
+        captionLabel.text = randomCaption()
     }
     
     override func viewDidLoad() {
@@ -27,7 +34,13 @@ class CaptionedViewController: UIViewController {
     }
     
     
-    
+    func randomCaption() -> String {
+        guard let caption = captions.randomElement() else {
+            assertionFailure("Caption should not be nil")
+            return ""
+        }
+        return caption.text
+    }
 
     /*
     // MARK: - Navigation
