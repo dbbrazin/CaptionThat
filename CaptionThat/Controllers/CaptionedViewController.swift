@@ -8,10 +8,11 @@
 
 import UIKit
 
-class CaptionedViewController: UIViewController {
+class CaptionedViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var captionLabel: UILabel!
+    @IBOutlet weak var captionTextField: UITextField!
     
     var newPic: Picture!
     var captions = [Caption(text: "I am serious. And don't call me Shirley"),
@@ -31,8 +32,22 @@ class CaptionedViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        captionTextField.delegate = self
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        captionLabel.text = textField.text
+    }
+    
+    
+    
+    @IBAction func setDefaultLabelText(_ sender: UIButton) {
+        captionLabel.text = "Default text"
+    }
     
     func randomCaption() -> String {
         guard let caption = captions.randomElement() else {
