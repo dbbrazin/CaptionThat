@@ -8,11 +8,12 @@
 
 import UIKit
 
-class CaptionedViewController: UIViewController, UITextFieldDelegate {
+class CaptionedViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var captionLabel: UILabel!
     @IBOutlet weak var captionTextField: UITextField!
+    
     
     var newPic: Picture!
     var captions = [Caption(text: "I am serious. And don't call me Shirley"),
@@ -56,7 +57,34 @@ class CaptionedViewController: UIViewController, UITextFieldDelegate {
         }
         return caption.text
     }
-
+    
+    
+    @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+            print("gesterure")
+            captionTextField.resignFirstResponder()
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.sourceType = .photoLibrary
+            imagePickerController.delegate = self
+            present(imagePickerController, animated: true, completion: nil)
+            
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        // The info dictionary may contain multiple representations of the image. You want to use the original.
+        guard let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
+            fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
+        }
+        
+        userImageView.image = selectedImage
+        
+        // Dismiss the picker.
+        dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 

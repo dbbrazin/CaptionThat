@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LandingViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class LandingViewController: UIViewController {
 
     
     @IBOutlet weak var authorLabel: UILabel!
@@ -23,34 +23,7 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         // Do any additional setup after loading the view.
     }
-    func showImagePicker() {
-        let pickerController = UIImagePickerController()
-        pickerController.delegate = self
-        pickerController.allowsEditing = true
-        pickerController.mediaTypes = ["public.image"]
-        pickerController.sourceType = .photoLibrary
-        pickerController.allowsEditing = false
-        pickerController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
-        self.present(pickerController, animated: true, completion: nil)
-    }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // Run everything in defer **last**
-        defer { picker.dismiss(animated: true, completion: nil) }
-        
-        // Retrieve the image I selected
-        guard let image = (info[.originalImage] ?? info[.editedImage]) as? UIImage else {
-            assertionFailure("Failed to retrieve image after image picker told us an image was picked")
-            return
-        }
-        // Create a Picture instance and pass it to new view
-        initalizeCaptionView(with: Picture(image: image))
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // Do nothing. We have nothing to handle here. Dismiss the picker
-        picker.dismiss(animated: true, completion: nil)
-    }
 
     @IBAction func handleUserDidTapImageGallery(_ sender: UIButton) {
         showImagePicker()
@@ -79,4 +52,35 @@ class LandingViewController: UIViewController, UIImagePickerControllerDelegate, 
         
     }
 
+}
+
+extension LandingViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+    func showImagePicker() {
+        let pickerController = UIImagePickerController()
+        pickerController.delegate = self
+        pickerController.allowsEditing = true
+        pickerController.mediaTypes = ["public.image"]
+        pickerController.sourceType = .photoLibrary
+        pickerController.allowsEditing = false
+        pickerController.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        self.present(pickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // Run everything in defer **last**
+        defer { picker.dismiss(animated: true, completion: nil) }
+        
+        // Retrieve the image I selected
+        guard let image = (info[.originalImage] ?? info[.editedImage]) as? UIImage else {
+            assertionFailure("Failed to retrieve image after image picker told us an image was picked")
+            return
+        }
+        // Create a Picture instance and pass it to new view
+        initalizeCaptionView(with: Picture(image: image))
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // Do nothing. We have nothing to handle here. Dismiss the picker
+        picker.dismiss(animated: true, completion: nil)
+    }
 }
